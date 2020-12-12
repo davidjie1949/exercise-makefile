@@ -6,7 +6,7 @@ OBJ := tool.o
 
 libtest.so: main.o $(OBJ)
 	$(C++) -shared -o libtest.so main.o $(OBJ)
-
+	
 # $(TARGETS): main.cpp $(OBJ)
 # 	$(C++) $(CFLAGS) main.cpp $(OBJ) -o $(TARGETS)
 
@@ -20,4 +20,4 @@ $(OBJ): tool.cpp
 
 clean:
 	@echo "cleaning up ... "
-	rm -f $(TARGETS) $(OBJ) *.so
+	rm -f $(TARGETS) $(OBJ) *.so *.o

@@ -1,3 +1,5 @@
 *.o
 test
 .vscode
+*.d
+*.so

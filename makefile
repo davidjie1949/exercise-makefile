@@ -2,18 +2,23 @@ CC := gcc
 C++ := g++
 CFLAGS := -lm -Wall -g
 TARGETS := test
-OBJ := main.o tool.o
+OBJS := main.o tool.o
 
 # libtest.so: $(OBJ)
 # 	$(C++) -shared -o $@ $^
 
-$(TARGETS): $(OBJ)
+ALL: $(TARGETS)
+DEPS := $(patsubst %.o, %.d, $(OBJS))
+-include $(DEPS)
+DEPFLAGS = -MMD -MF $(@:.o=.d)
+
+test: $(OBJS)
 	$(C++) $(CFLAGS) -o $@ $^
 
-%.o: %.cpp tool.hpp
-	$(C++) -fPIC -c $*.cpp
+%.o: %.cpp
+	$(C++) $(CFLAGS) -fPIC -c $< $(DEPFLAGS)
 	
 clean:
 	@echo "cleaning up ... "
-	rm $(TARGETS) $(OBJ) *.so *.o
+	rm $(TARGETS) $(OBJS) *.so *.o *.d
 	@echo "cleaned successfully!"
